@@ -2,6 +2,7 @@ import "dart:convert";
 import 'dart:io';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:http/http.dart';
+import 'package:encrypt/encrypt.dart';
 
 // import 'package:html/parser.dart';
 // import 'package:html/dom.dart' as Dom;
@@ -187,7 +188,7 @@ class _SearchState extends State<Search> {
                   onPressed: () async {
                     String cache_path = await FilePicker.getFilePath(
                         type: FileType.custom,
-                        allowedExtensions: ["cache"],
+                        allowedExtensions: ["cache", "json"],
                         onFileLoading: (value) {
                           print(value);
                         });
@@ -198,7 +199,9 @@ class _SearchState extends State<Search> {
                         .transform(utf8.decoder)
                         .transform(LineSplitter())
                         .listen((String line) {
-                      print(line);
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (BuildContext context) =>
+                              ResultPage(products: jsonDecode(line))));
                     }, onDone: () {
                       print("closed");
                     }, onError: (e) {
