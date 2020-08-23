@@ -90,7 +90,7 @@ class _ResultPageState extends State<ResultPage> {
           SizedBox(width: 20),
         ],
       ),
-      body: Container(
+      body: Scrollbar(
         child: ListView.builder(
           itemCount: productsList.length,
           itemBuilder: (context, index) {
@@ -108,11 +108,17 @@ class _ResultPageState extends State<ResultPage> {
   }
 
   String getImage(List productsList, int index) {
-    if (widget.products[productsList[index]]["image"] == null)
+    String img = widget.products[productsList[index]]["image"];
+    if (img == null || img.split(".")[img.split(".").length - 1] == "svg") {
+      widget.products[productsList[index]]["image"] =
+          "https://bitsofco.de/content/images/2018/12/broken-1.png";
       return "https://bitsofco.de/content/images/2018/12/broken-1.png";
+    }
     try {
       return widget.products[productsList[index]]["image"];
     } catch (e) {
+      widget.products[productsList[index]]["image"] =
+          "https://bitsofco.de/content/images/2018/12/broken-1.png";
       return "https://bitsofco.de/content/images/2018/12/broken-1.png";
     }
   }
