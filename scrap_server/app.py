@@ -34,6 +34,10 @@ threading.Thread(target=flush.flush).start()
 #     chrome.find_element_by_xpath("//textarea[@class='textarea']").clear().send_keys(link.encode());
 
 
+@app.route("/test")
+def test():
+    return "test"
+
 @app.route('/', methods=["GET"])
 def hello_world():
     data["product"] = str(request.args["product"])

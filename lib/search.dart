@@ -311,6 +311,7 @@ class _SearchState extends State<Search> {
       "email": Advanced.emailController.text,
     };
     final options = jsonEncode(advanced);
+    print("$link?product=$product&country=$countryCode&length=$length&timestamp=$timestamp&override=${override.toString()}&options=$options");
 
     Response res = await client.get(
         "$link?product=$product&country=$countryCode&length=$length&timestamp=$timestamp&override=${override.toString()}&options=$options");
@@ -376,6 +377,7 @@ class _SearchState extends State<Search> {
     Response res = await client.get(
         "$link/cache?timestamp=$timestamp&product=$product&override=$randKey");
     final data = jsonDecode(res.body);
+    print(data);
 
     if (data != -1) {
       ControlPage.products = data;

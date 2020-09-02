@@ -13,9 +13,12 @@ chrome_options.binary_location = environ.get("GOOGLE_CHROME_BIN")
 chrome_options.add_argument("--headless")
 chrome_options.add_argument("--disable-dev-shm-usage")
 chrome_options.add_argument("--no-sandbox")
+chrome_options.add_argument("user-agent=[Chrome/80.0.3987.116]")
 
-chrome = webdriver.Chrome("D:/chromedriver.exe", chrome_options=chrome_options)
-
+chrome = webdriver.Chrome(
+    executable_path=environ.get("CHROMEDRIVER_PATH"),
+    chrome_options=chrome_options)
+    
 MODULE = "Flipkart"
 links = {"Flipkart": ["https://www.flipkart.com/search?q=",
                       {

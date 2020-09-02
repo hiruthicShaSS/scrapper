@@ -8,13 +8,10 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
 from colorama import init, Fore
-from cryptography.fernet import Fernet
 from selenium import webdriver
 
 init()
 
-key = Fernet.generate_key()
-print(key)
 
 chrome_options = webdriver.ChromeOptions()
 chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
