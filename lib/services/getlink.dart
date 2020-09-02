@@ -8,5 +8,5 @@ Future<String> getlink(BaseClient client) async {
 //  var doc = parse(response.body);
 //  List<Element> link = doc.getElementsByTagName("textarea");
 //  return link[0].text;
-  return "https://product-scrapper-server.herokuapp.com";
+  return "// Server link";
 }
