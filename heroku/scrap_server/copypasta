@@ -1,0 +1,71 @@
+self.noItem = 0
+                    try:
+                        name = self.chrome.find_element_by_xpath(
+                            links["Flipkart"][1]["name"][0].replace("placeholder", str(i))).text
+                        price = self.chrome.find_element_by_xpath(
+                            links["Flipkart"][1]["price"][0].replace("placeholder", str(i))).text
+                        currency = price[0]
+                        # currency = self.chrome.find_element_by_xpath(
+                        # links["Flipkart"][1]["currency"][0].replace("placeholder", str(i))).text
+                        image = self.chrome.find_element_by_xpath(
+                            links["Flipkart"][1]["image"][0].replace("placeholder", str(i))).get_attribute("src")
+                        url = self.chrome.find_element_by_xpath(
+                            links["Flipkart"][1]["name"][0].replace("placeholder", str(i))).get_attribute(
+                            "href")
+                        self.products[name] = {"price": price[1:], "currency": currency, "image": image, "url": url}
+                    except self.NoSuchElementException:
+                        self.noItem += 1
+                    print(f"Method 1 completed => {self.noItem} ({time.time() - start}) - [Remaining pages: {maxPages}]")
+
+                    try:
+                        name = self.chrome.find_element_by_xpath(
+                            links["Flipkart"][1]["name"][1].replace("placeholder", str(i))).text
+                        price = self.chrome.find_element_by_xpath(
+                            links["Flipkart"][1]["price"][1].replace("placeholder", str(i))).text
+                        currency = price[0]
+                        # currency = self.chrome.find_element_by_xpath(
+                        #     links["Flipkart"][1]["currency"][1].replace("placeholder", str(i))).text
+                        image = self.chrome.find_element_by_xpath(
+                            links["Flipkart"][1]["image"][1].replace("placeholder", str(i))).get_attribute("src")
+                        url = self.chrome.find_element_by_xpath(
+                            links["Flipkart"][1]["name"][1].replace("placeholder", str(i))).get_attribute(
+                            "href")
+                        self.products[name] = {"price": price[1:], "currency": currency, "image": image, "url": url}
+                    except self.NoSuchElementException:
+                        self.noItem += 1
+                    print(f"Method 2 completed => {self.noItem} ({time.time() - start})")
+
+                    # try:
+                    #     name = self.chrome.find_element_by_xpath(
+                    #         links["Flipkart"][1]["name"][2].replace("placeholder", str(i))).text
+                    #     price = self.chrome.find_element_by_xpath(
+                    #         links["Flipkart"][1]["price"][2].replace("placeholder", str(i))).text
+                    #     currency = self.chrome.find_element_by_xpath(
+                    #         links["Flipkart"][1]["currency"][2].replace("placeholder", str(i))).text
+                    #     image = self.chrome.find_element_by_xpath(
+                    #         links["Flipkart"][1]["image"][2].replace("placeholder", str(i))).get_attribute("src")
+                    #     url = self.chrome.find_element_by_xpath(
+                    #         links["Flipkart"][1]["url"][2].replace("placeholder", str(i))).get_attribute(
+                    #         "href")
+                    #     self.products[name] = {"price": price, "currency": currency, "image": image, "url": url}
+                    # except self.NoSuchElementException:
+                    #     self.noItem += 1
+                    # # print(f"Method 3 completed => {self.noItem} ({time.time() - start}) - [Remaining pages: {maxPages}]")
+
+            print(Fore.WHITE, "Total products found so far:", len(self.products.keys()), "- ",
+                  time.time() - whileStart,
+                  "sec's.")
+            try:
+                self.chrome.find_element_by_xpath(links["Flipkart"][1]["next"]).click()
+                time.sleep(2)
+            except self.NoSuchElementException:
+                print(Fore.RED, "No element while clicking")
+
+            with open(filename, "ab") as file:
+                pickle.dump(self.products, file)
+                print(Fore.GREEN, "Write completed (checkpoint) => ", filename)
+                # self.chrome.close()
+
+            maxPages -= 1
+            self.writeToFile(filename)
+            return
